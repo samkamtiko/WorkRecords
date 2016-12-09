@@ -1,6 +1,6 @@
-package Http;
+package http;
 
-import Controller.RouteMatcher;
+import controller.RouteMatcher;
 
 import java.io.IOException;
 import java.io.InputStream;

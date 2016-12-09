@@ -1,10 +1,10 @@
-package Controller;
+package controller;
 
-import Http.HttpRequest;
-import Http.HttpResponse;
+import http.HttpRequest;
+import http.HttpResponse;
 
 public class NotFoundHandler implements GenericHandler {
-
+    
     @Override
     public HttpResponse handleRequest(HttpRequest request) {
         return new HttpResponse(404);

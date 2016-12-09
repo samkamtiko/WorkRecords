@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 public class UserHandlerFactory {
     private static UserHandlerFactory ourInstance = new UserHandlerFactory();
@@ -8,7 +8,7 @@ public class UserHandlerFactory {
     }
 
     public UserHandler getUserHandler() {
-        return UserHandler.getInstance();
+        return null;
     }
 
     private UserHandlerFactory() {

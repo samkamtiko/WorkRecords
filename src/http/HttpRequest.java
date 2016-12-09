@@ -1,4 +1,4 @@
-package Http;
+package http;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -96,6 +96,7 @@ public class HttpRequest {
         String output = "HttpRequest: \n";
 
         output += mType.toString() + "\n";
+        output += mRoute.toString() + "\n";
         output += mProtocol.toString() + "\n";
 
         for(String key : mHeader.keySet()) {

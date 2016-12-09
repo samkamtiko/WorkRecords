@@ -1,4 +1,4 @@
-package Http;
+package http;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

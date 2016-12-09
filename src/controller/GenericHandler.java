@@ -1,7 +1,7 @@
-package Controller;
+package controller;
 
-import Http.HttpRequest;
-import Http.HttpResponse;
+import http.HttpRequest;
+import http.HttpResponse;
 
 public interface GenericHandler {
 
