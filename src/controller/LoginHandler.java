@@ -2,25 +2,21 @@ package controller;
 
 import http.HttpRequest;
 import http.HttpResponse;
+import view.StaticContent;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
-public class LoginHandler implements GenericHandler {
+public class LoginHandler extends GenericHandler {
 
     @Override
-    public HttpResponse handleRequest(HttpRequest request) {
+    public HttpResponse handleGetRequest(HttpRequest request) {
         HttpResponse response;
         try {
             response = new HttpResponse(200);
-            response.setData(new String(Files.readAllBytes(
-                    Paths.get(new File("").getAbsolutePath() + "/src/view/static/login.html"))));
+            response.setData(StaticContent.get("login.html"));
         } catch (IOException e) {
             e.printStackTrace();
-            response = new HttpResponse(404);
+            response = HttpResponse.notFound();
         }
         return response;
     }

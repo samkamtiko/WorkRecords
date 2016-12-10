@@ -64,7 +64,10 @@ public class HttpRequest {
     }
 
     public String getOption(String name) {
-        return mHeader.get(name);
+        if (mHeader.containsKey(name)) {
+            return mHeader.get(name);
+        }
+        return "";
     }
 
     public void setData(String data) {

@@ -1,6 +1,6 @@
 package http;
 
-import controller.RouteMatcher;
+import controller.Controller;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,15 +24,10 @@ public class HttpClientHandler implements Runnable {
         mInputStreamReader = new InputStreamReader(mInputStream);
     }
 
-    private HttpResponse processRequest(HttpRequest request) {
-        RouteMatcher matcher = RouteMatcher.getInstance();
-        return matcher.getMatch(request.getRoute()).handleRequest(request);
-    }
-
     private void handleRequest(byte[] buffer, int numBytes) throws IOException {
         HttpRequest request = HttpParser.parseRequest(numBytes, buffer);
         System.out.println(request);
-        HttpResponse response = processRequest(request);
+        HttpResponse response = Controller.processRequest(request);
         sendResponse(response);
     }
 

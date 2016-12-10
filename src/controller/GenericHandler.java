@@ -3,7 +3,13 @@ package controller;
 import http.HttpRequest;
 import http.HttpResponse;
 
-public interface GenericHandler {
+public abstract class GenericHandler {
 
-    HttpResponse handleRequest(HttpRequest request);
+    public HttpResponse handleGetRequest(HttpRequest request) {
+        return HttpResponse.notFound();
+    }
+
+    public HttpResponse handlePostRequest(HttpRequest request) {
+        return HttpResponse.notFound();
+    }
 }

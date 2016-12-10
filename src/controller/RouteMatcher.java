@@ -1,5 +1,7 @@
 package controller;
 
+import http.HttpRequest;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -24,10 +26,22 @@ public class RouteMatcher {
         return matcher;
     }
 
-    public GenericHandler getMatch(String route) {
+    private boolean isAuthorized(HttpRequest request) {
+        // TODO: check if the user is in a database
+        return !request.getOption("Cookie").equals("");
+    }
+
+    public GenericHandler getMatch(HttpRequest request) {
+        String route = request.getRoute();
         for(String key: handlers.keySet()) {
+            // TODO: match should be performed by using regexp
             if (key.equals(route)) {
                 System.out.println("Match found: " + key);
+                // If not login and not authorized, then redirect to login
+                if (!route.equals("/login") && !isAuthorized(request)) {
+                    System.out.println("Not authorized");
+                    return new UnauthorizedHandler();
+                }
                 return handlers.get(key);
             }
         }

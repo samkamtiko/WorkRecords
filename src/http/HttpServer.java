@@ -8,6 +8,16 @@ public class HttpServer {
     private InetAddress mAddress;
     private int mPort;
 
+    private static HttpServer ourInstance = new HttpServer();
+
+    public static HttpServer getInstance() {
+        return ourInstance;
+    }
+
+    private HttpServer() {
+
+    }
+
     public HttpServer(String address, int port) throws UnknownHostException {
         mAddress = InetAddress.getByName(address);
         mPort = port;
@@ -31,6 +41,22 @@ public class HttpServer {
 
     }
 
+    private synchronized void setPort(int port) {
+        mPort = port;
+    }
+
+    private synchronized void setAddress(InetAddress addr) {
+        mAddress = addr;
+    }
+
+    public synchronized int getPort() {
+        return mPort;
+    }
+
+    public synchronized InetAddress getAddress() {
+        return mAddress;
+    }
+
     public static void main(String[] args) {
         if (args.length < 2) {
             System.out.println("Please provide address and port to listen");
@@ -38,7 +64,9 @@ public class HttpServer {
         }
 
         try {
-            HttpServer server = new HttpServer(args[0], Integer.parseInt(args[1]));
+            HttpServer server = HttpServer.getInstance();
+            server.setAddress(InetAddress.getByName(args[0]));
+            server.setPort(Integer.parseInt(args[1]));
             server.start();
         } catch (UnknownHostException e) {
             System.err.println("Unknown hostname: " + args[0]);
