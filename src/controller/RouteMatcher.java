@@ -1,6 +1,7 @@
 package controller;
 
 import http.HttpRequest;
+import view.StaticContent;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -46,7 +47,11 @@ public class RouteMatcher {
             }
         }
 
-        // TODO: Should also match static files
+        if (StaticContent.isFileExist(route.substring(1))) {
+            // TODO: some arguments could be set into the handler
+            return new StaticFileHandler();
+        }
+
         System.out.println("Match not found");
         return new NotFoundHandler();
     }

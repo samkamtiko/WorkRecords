@@ -7,8 +7,13 @@ import java.nio.file.Paths;
 
 public class StaticContent {
 
+    private static String staticDirPath = new File("").getAbsolutePath() + "/src/view/static/";
+
     public static String get(String filename) throws IOException {
-        return new String(Files.readAllBytes(
-                Paths.get(new File("").getAbsolutePath() + "/src/view/static/" + filename)));
+        return new String(Files.readAllBytes(Paths.get(staticDirPath + filename)));
+    }
+
+    public static boolean isFileExist(String filename) {
+        return new File(staticDirPath + filename).exists();
     }
 }

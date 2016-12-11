@@ -69,7 +69,7 @@ public class HttpResponse {
         resp += "\n";
 
         resp += mData;
-        System.out.println(resp);
+        //System.out.println(resp);
         return resp.getBytes();
     }
 
@@ -92,6 +92,12 @@ public class HttpResponse {
     public static HttpResponse redirect(String route) {
         HttpResponse resp = new HttpResponse(302);
         resp.addOptionalHeader("Location", route);
+        return resp;
+    }
+
+    public static HttpResponse responseStatic(String filename) throws IOException {
+        HttpResponse resp = new HttpResponse(200);
+        resp.setData(StaticContent.get(filename));
         return resp;
     }
 }
