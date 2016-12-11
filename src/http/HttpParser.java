@@ -31,7 +31,7 @@ public class HttpParser {
             String line = reader.readLine();
             if (!line.equals("")) {
                 String[] values = line.split(":");
-                request.addOption(values[0], values[1]);
+                request.addOption(values[0], values[1].substring(1));
             } else {
                 // Empty string, and data after that
                 String httpData = "";
@@ -43,6 +43,25 @@ public class HttpParser {
             }
         }
 
+        // For now assume that request could be only split into headers/data
+        if (request.getData().length() != request.getContentLength()) {
+            request.setPartial(true);
+        }
+
         return request;
+    }
+
+    public static String parseData(byte[] data, int numBytes) throws IOException {
+        String res = "";
+        BufferedReader reader =
+                new BufferedReader(
+                        new InputStreamReader(
+                                new ByteArrayInputStream(data, 0, numBytes)));
+
+        while(reader.ready()) {
+            String line = reader.readLine();
+            res += line;
+        }
+        return res;
     }
 }

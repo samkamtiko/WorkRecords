@@ -14,6 +14,7 @@ public class HttpClientHandler implements Runnable {
     private OutputStream mOutputStream;
     private InputStream mInputStream;
     private InputStreamReader mInputStreamReader;
+    private HttpRequest mPartialRequest;
 
     public HttpClientHandler(Socket socket) throws IOException {
         mSocket = socket;
@@ -22,10 +23,23 @@ public class HttpClientHandler implements Runnable {
         mInputStream = mSocket.getInputStream();
 
         mInputStreamReader = new InputStreamReader(mInputStream);
+        mPartialRequest = null;
     }
 
     private void handleRequest(byte[] buffer, int numBytes) throws IOException {
-        HttpRequest request = HttpParser.parseRequest(numBytes, buffer);
+        HttpRequest request;
+        if (mPartialRequest != null) {
+            mPartialRequest.setData(HttpParser.parseData(buffer, numBytes));
+            request = mPartialRequest;
+            request.setPartial(false);
+            mPartialRequest = null;
+        } else {
+            request = HttpParser.parseRequest(numBytes, buffer);
+            if (request.isPartial()) {
+                mPartialRequest = request;
+                return;
+            }
+        }
         System.out.println(request);
         HttpResponse response = Controller.processRequest(request);
         sendResponse(response);

@@ -5,6 +5,7 @@ import http.HttpResponse;
 import view.StaticContent;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 public class LoginHandler extends GenericHandler {
 
@@ -19,5 +20,12 @@ public class LoginHandler extends GenericHandler {
             response = HttpResponse.notFound();
         }
         return response;
+    }
+
+    @Override
+    public HttpResponse handlePostRequest(HttpRequest request) {
+        HashMap<String, String> params = HttpRequest.parseParams(request.getData());
+        System.out.println("LOGIN: " + params.get("login") + " PASSWD: " + params.get("password"));
+        return HttpResponse.redirect("/users/1", params.get("login"));
     }
 }

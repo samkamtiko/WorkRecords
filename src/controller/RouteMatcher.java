@@ -3,6 +3,8 @@ package controller;
 import http.HttpRequest;
 import view.StaticContent;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -14,9 +16,9 @@ public class RouteMatcher {
 
     static {
         handlers = new LinkedHashMap<>();
-        handlers.put("/login", new LoginHandler());
-        handlers.put("/users/[0-9]+", new UsersIdHandler());
-        handlers.put("/users/new", new UsersNewHandler());
+        handlers.put("^/login$", new LoginHandler());
+        handlers.put("^/users/([0-9]+)$", new UsersIdHandler());
+        handlers.put("^/users/new$", new UsersNewHandler());
     }
 
     public static synchronized RouteMatcher getInstance() {
@@ -35,13 +37,18 @@ public class RouteMatcher {
     public GenericHandler getMatch(HttpRequest request) {
         String route = request.getRoute();
         for(String key: handlers.keySet()) {
+            Matcher matcher = Pattern.compile(key).matcher(route);
             // TODO: match should be performed by using regexp
-            if (key.equals(route)) {
+            if (matcher.find()) {
                 System.out.println("Match found: " + key);
                 // If not login and not authorized, then redirect to login
                 if (!route.equals("/login") && !isAuthorized(request)) {
                     System.out.println("Not authorized");
                     return new UnauthorizedHandler();
+                }
+
+                for(int idx = 0; idx < matcher.groupCount(); idx += 1) {
+                    request.addMatchedGroup(matcher.group(idx + 1));
                 }
                 return handlers.get(key);
             }

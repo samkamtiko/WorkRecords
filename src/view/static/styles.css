@@ -1,0 +1,13 @@
+
+div, #loginForm {
+    display: block;
+}
+
+#regForm {
+    margin-top: 50px;
+}
+
+div, #regForm {
+    display: block;
+    
+}

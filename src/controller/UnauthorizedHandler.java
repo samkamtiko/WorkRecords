@@ -8,6 +8,6 @@ public class UnauthorizedHandler extends GenericHandler {
 
     @Override
     public HttpResponse handleGetRequest(HttpRequest request) {
-        return HttpResponse.redirect("/login");
+        return HttpResponse.redirect("/login", "");
     }
 }

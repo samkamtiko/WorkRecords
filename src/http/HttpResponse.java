@@ -1,5 +1,8 @@
 package http;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import view.StaticContent;
 
 import java.io.IOException;
@@ -26,7 +29,7 @@ public class HttpResponse {
     static {
         mMandatoryHeaders = new LinkedHashMap<>();
         mMandatoryHeaders.put("Date", ""); // Date is updated for each response
-        mMandatoryHeaders.put("Content-Type", "text/html; charset=UTF-8");
+        //mMandatoryHeaders.put("Content-Type", "text/html; charset=UTF-8");
         mMandatoryHeaders.put("Server", "Server/111");
     }
 
@@ -44,6 +47,16 @@ public class HttpResponse {
         mCode = code;
         mMandatoryHeaders.put("Date", getCurrentDate());
         mOptionalHeaders = new HashMap<>();
+        setContentType("text/html");
+    }
+
+    public void setContentType(String value) {
+        System.out.println("Content-Type: " + value);
+        mOptionalHeaders.put("Content-Type", value + "; charset=UTF-8");
+    }
+
+    public void setContentLength(Integer value) {
+        mOptionalHeaders.put("Content-Length", value.toString());
     }
 
     public void setData(String data) {
@@ -51,6 +64,8 @@ public class HttpResponse {
             data = "";
         }
         mData = data;
+        setContentLength(mData.length());
+
     }
 
     public byte[] asByteArray() {
@@ -69,7 +84,7 @@ public class HttpResponse {
         resp += "\n";
 
         resp += mData;
-        //System.out.println(resp);
+        System.out.println(resp);
         return resp.getBytes();
     }
 
@@ -89,15 +104,35 @@ public class HttpResponse {
         return resp;
     }
 
-    public static HttpResponse redirect(String route) {
+    public static HttpResponse redirect(String route, String cookie) {
         HttpResponse resp = new HttpResponse(302);
         resp.addOptionalHeader("Location", route);
+        resp.addOptionalHeader("Set-Cookie", cookie);
         return resp;
+    }
+
+    public static String getType(String filename) {
+        Pattern extensionPattern = Pattern.compile("(\\.[^.]+)$");
+        Matcher matcher = extensionPattern.matcher(filename);
+        if (matcher.find()) {
+            String ext = matcher.group(0);
+            switch(ext) {
+                case ".html":
+                    return "text/html";
+                case ".css":
+                    return "text/css";
+                default:
+                    return "text/html";
+            }
+        } else {
+            return "";
+        }
     }
 
     public static HttpResponse responseStatic(String filename) throws IOException {
         HttpResponse resp = new HttpResponse(200);
         resp.setData(StaticContent.get(filename));
+        resp.setContentType(getType(filename));
         return resp;
     }
 }

@@ -10,6 +10,7 @@ public class StaticContent {
     private static String staticDirPath = new File("").getAbsolutePath() + "/src/view/static/";
 
     public static String get(String filename) throws IOException {
+        System.out.println("Request file: " +  filename);
         return new String(Files.readAllBytes(Paths.get(staticDirPath + filename)));
     }
 

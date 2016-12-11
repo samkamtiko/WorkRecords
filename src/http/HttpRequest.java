@@ -1,8 +1,10 @@
 package http;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 public class HttpRequest {
 
@@ -20,7 +22,7 @@ public class HttpRequest {
                 case "PUT":
                     return HTTPRequestType.PUT;
                 default:
-                    throw new IOException("Unsupported type");
+                    throw new IOException("Unsupported type: " + type);
             }
         }
     }
@@ -46,9 +48,12 @@ public class HttpRequest {
     private HTTPRequestType mType;
     private String mRoute;
     private HTTPProtocol mProtocol;
+    private boolean mPartial;
+    private ArrayList<String> mMatchedGroups;
 
     public HttpRequest() {
         mHeader = new LinkedHashMap<>();
+        mMatchedGroups = new ArrayList<>();
     }
 
     public void setType(HTTPRequestType type) {
@@ -94,6 +99,21 @@ public class HttpRequest {
         return mRoute;
     }
 
+    public Integer getContentLength() {
+        if (mHeader.containsKey("Content-Length")) {
+            return Integer.parseInt(mHeader.get("Content-Length"));
+        }
+        return 0;
+    }
+
+    public boolean isPartial() {
+        return mPartial;
+    }
+
+    public void setPartial(boolean flag) {
+        mPartial = flag;
+    }
+
     @Override
     public String toString() {
         String output = "HttpRequest: \n";
@@ -110,6 +130,25 @@ public class HttpRequest {
         output += mData + "\n";
 
         return output;
+    }
+
+    public static HashMap<String, String> parseParams(String data) {
+        HashMap<String, String> params = new LinkedHashMap<>();
+
+        String[] parsed = data.split("&");
+        for(String param: parsed) {
+            String[] paramValue = param.split("=");
+            params.put(paramValue[0], paramValue[1]);
+        }
+        return params;
+    }
+
+    public void addMatchedGroup(String group) {
+        mMatchedGroups.add(group);
+    }
+
+    public String getMatchedGroup(int idx) {
+        return mMatchedGroups.get(idx);
     }
 
 }
