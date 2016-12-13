@@ -8,7 +8,7 @@ public class UserHandlerFactory {
     }
 
     public UserHandler getUserHandler() {
-        return null;
+        return UserHandlerMongoDB.getInstance();
     }
 
     private UserHandlerFactory() {

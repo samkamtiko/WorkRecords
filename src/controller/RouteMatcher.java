@@ -17,7 +17,7 @@ public class RouteMatcher {
     static {
         handlers = new LinkedHashMap<>();
         handlers.put("^/login$", new LoginHandler());
-        handlers.put("^/users/([0-9]+)$", new UsersIdHandler());
+        handlers.put("^/users/([a-f\\d]{24})$", new UsersIdHandler());
         handlers.put("^/users/new$", new UsersNewHandler());
     }
 
@@ -38,7 +38,6 @@ public class RouteMatcher {
         String route = request.getRoute();
         for(String key: handlers.keySet()) {
             Matcher matcher = Pattern.compile(key).matcher(route);
-            // TODO: match should be performed by using regexp
             if (matcher.find()) {
                 System.out.println("Match found: " + key);
                 // If not login and not authorized, then redirect to login

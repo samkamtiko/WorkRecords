@@ -38,5 +38,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="mongo-java-driver-3.4.0" level="project" />
   </component>
 </module>
