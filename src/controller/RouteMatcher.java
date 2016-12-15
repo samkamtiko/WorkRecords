@@ -41,7 +41,7 @@ public class RouteMatcher {
             if (matcher.find()) {
                 System.out.println("Match found: " + key);
                 // If not login and not authorized, then redirect to login
-                if (!route.equals("/login") && !isAuthorized(request)) {
+                if (!route.equals("/login") && !route.equals("/users/new") && !isAuthorized(request)) {
                     System.out.println("Not authorized");
                     return new UnauthorizedHandler();
                 }
