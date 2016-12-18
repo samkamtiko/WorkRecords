@@ -51,7 +51,6 @@ public class HttpResponse {
     }
 
     public void setContentType(String value) {
-        System.out.println("Content-Type: " + value);
         mOptionalHeaders.put("Content-Type", value + "; charset=UTF-8");
     }
 
@@ -68,8 +67,8 @@ public class HttpResponse {
 
     }
 
-    public byte[] asByteArray() {
-        // TODO: temporary response
+    @Override
+    public String toString() {
         String resp = mProto + " " + mCode.toString() + " " + mRespCodes.get(mCode) + "\n";
 
         for(String key: mMandatoryHeaders.keySet()) {
@@ -84,6 +83,15 @@ public class HttpResponse {
         resp += "\n";
 
         resp += mData;
+        return resp;
+    }
+
+    public String getData() {
+        return mData;
+    }
+
+    public byte[] asByteArray() {
+        String resp = toString();
         System.out.println(resp);
         return resp.getBytes();
     }

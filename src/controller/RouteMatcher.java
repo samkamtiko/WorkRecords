@@ -19,6 +19,10 @@ public class RouteMatcher {
         handlers.put("^/login$", new LoginHandler());
         handlers.put("^/users/([a-f\\d]{24})$", new UsersIdHandler());
         handlers.put("^/users/new$", new UsersNewHandler());
+        handlers.put("^/users/list$", new UsersListHandler());
+        handlers.put("^/tasks/([a-f\\d]{24})$", new TasksIdHandler());
+        handlers.put("^/tasks/new$", new TaskNewHandler());
+        handlers.put("^/tasks/list$", new TasksListHandler());
     }
 
     public static synchronized RouteMatcher getInstance() {

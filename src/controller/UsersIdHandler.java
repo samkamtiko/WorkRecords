@@ -17,7 +17,7 @@ public class UsersIdHandler extends GenericHandler {
     @Override
     public HttpResponse handleGetRequest(HttpRequest request) {
         String id = request.getMatchedGroup(0);
-        UserHandler handler = UserHandlerFactory.getInstance().getUserHandler();
+        UserHandler handler = getUserHandler();
         User user = handler.getById(id);
         HttpResponse response = new HttpResponse(200);
         if (user == null) {
