@@ -30,8 +30,8 @@ public class UserHandlerMongoDB implements UserHandler {
     private User decodeUser(BasicDBObject dbObject) {
         User user = new User();
         user.setId(dbObject.getString("_id"));
-        user.setGroup(UserGroup.getFromInt(dbObject.getInt("group")));
-        user.setLogin(dbObject.getString("login"));
+//        user.setGroup(UserGroup.getFromInt(dbObject.getInt("group")));
+        user.setEmail(dbObject.getString("login"));
         user.setName(dbObject.getString("name"));
         user.setPassword(dbObject.getString("password"));
 //        user.setSalary(dbObject.getInt("salary"));
@@ -61,12 +61,27 @@ public class UserHandlerMongoDB implements UserHandler {
     public void addUser(User user) {
         BasicDBObject doc = new BasicDBObject()
             .append("name", user.getName())
-            .append("login", user.getLogin())
+            .append("login", user.getEmail())
             .append("password", user.getPassword())
             .append("salary", 0)
             .append("group", 0);
         mUserCollection.insertOne(doc);
         user.setId(doc.getString("_id"));
+    }
+
+    @Override
+    public void updateUser(String id, User user) {
+        BasicDBObject update = new BasicDBObject();
+        update.put("$set", new BasicDBObject()
+                .append("name", user.getName())
+                .append("email", user.getEmail())
+                .append("password", user.getPassword())
+                .append("salary", user.getSalary().toString())
+                .append("group", user.getGroup().toString()));
+
+        BasicDBObject searchItem = new BasicDBObject().append("_id", new ObjectId(id));
+        mUserCollection.updateOne(searchItem, update);
+        user.setId(id);
     }
 
     public static void main(String[] args) {

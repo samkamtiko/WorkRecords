@@ -34,13 +34,33 @@ public class UserHandlerFake implements UserHandler {
         users.add(user);
     }
 
+    @Override
+    public void updateUser(String id, User user) {
+        User usr = null;
+        for(User u: users) {
+            if (u.getId().equals(id)) {
+                usr = u;
+                break;
+            }
+        }
+        if (usr == null) {
+            return;
+        }
+
+        usr.setName(user.getName());
+        usr.setSalary(user.getSalary());
+        usr.setPassword(user.getPassword());
+        usr.setGroup(user.getGroup());
+        usr.setEmail(user.getEmail());
+    }
+
     public void createUser(String id) {
         User user = new User();
         user.setId(id);
         user.setName("name");
         user.setPassword("password");
         user.setSalary(0);
-        user.setLogin("login");
+        user.setEmail("login");
         user.setGroup(UserGroup.PERFORMER);
         addUser(user);
     }

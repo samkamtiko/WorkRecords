@@ -17,9 +17,12 @@ public class RouteMatcher {
     static {
         handlers = new LinkedHashMap<>();
         handlers.put("^/login$", new LoginHandler());
+
         handlers.put("^/users/([a-f\\d]{24})$", new UsersIdHandler());
         handlers.put("^/users/new$", new UsersNewHandler());
         handlers.put("^/users/list$", new UsersListHandler());
+        handlers.put("^/users/([a-f\\d]{24})/edit$", new UsersEditHandler());
+
         handlers.put("^/tasks/([a-f\\d]{24})$", new TasksIdHandler());
         handlers.put("^/tasks/new$", new TasksNewHandler());
         handlers.put("^/tasks/list$", new TasksListHandler());

@@ -3,12 +3,19 @@ package model;
 public class User {
     private String id;
     private String name;
-    private String login;
+    private String email;
     private String password;
     private UserGroup group;
     private Integer salary;
 
-    public User() {}
+    public User() {
+        salary = 0;
+        group = UserGroup.PERFORMER;
+        password = "";
+        id = "";
+        name = "";
+        email = "";
+    }
 
     public String getName() {
         return name;
@@ -18,12 +25,12 @@ public class User {
         this.name = name;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -62,7 +69,7 @@ public class User {
     public String toString() {
         String out = "";
         out += name + "\n";
-        out += login + "\n";
+        out += email + "\n";
         out += password + "\n";
         return out;
     }

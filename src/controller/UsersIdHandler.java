@@ -4,8 +4,6 @@ import http.HttpRequest;
 import http.HttpResponse;
 import model.User;
 import model.UserHandler;
-import model.UserHandlerFactory;
-import model.UserHandlerMongoDB;
 import view.StaticContent;
 import view.template.MissingParameterException;
 import view.template.TemplateEngine;
@@ -29,7 +27,7 @@ public class UsersIdHandler extends GenericHandler {
                 eng.setTemplate(file);
                 eng.addVariable("name", user.getName());
                 eng.addVariable("id", user.getId());
-                eng.addVariable("login", user.getLogin());
+                eng.addVariable("login", user.getEmail());
                 eng.addVariable("password", user.getPassword());
                 eng.addVariable("group", "");
                 eng.addVariable("salary", "");

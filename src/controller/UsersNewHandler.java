@@ -15,7 +15,7 @@ public class UsersNewHandler extends GenericHandler {
         UserHandler handler = UserHandlerFactory.getInstance().getUserHandler();
         HashMap<String, String> params = HttpRequest.parseParams(request.getData());
         User user = new User();
-        user.setLogin(params.get("login"));
+        user.setEmail(params.get("login"));
         user.setPassword(params.get("password"));
         user.setName(params.get("name"));
         handler.addUser(user);
