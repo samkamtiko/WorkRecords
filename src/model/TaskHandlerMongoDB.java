@@ -65,4 +65,19 @@ public class TaskHandlerMongoDB implements TaskHandler {
         mTaskCollection.insertOne(doc);
         task.setId(doc.getString("_id"));
     }
+
+    @Override
+    public void updateTask(Task task) {
+        String id = task.getId();
+        BasicDBObject update = new BasicDBObject();
+            update.put("$set", new BasicDBObject()
+                    .append("name", task.getName())
+                    .append("description", task.getDescription()));
+
+        BasicDBObject searchItem = new BasicDBObject().append("_id", new ObjectId(id));
+        mTaskCollection.updateOne(searchItem, update);
+        task.setId(id);
+    }
+
+
 }

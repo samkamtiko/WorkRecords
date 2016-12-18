@@ -138,7 +138,11 @@ public class HttpRequest {
         String[] parsed = data.split("&");
         for(String param: parsed) {
             String[] paramValue = param.split("=");
-            params.put(paramValue[0], paramValue[1]);
+            if (paramValue.length == 1) {
+                params.put(paramValue[0], "");
+            } else {
+                params.put(paramValue[0], paramValue[1]);
+            }
         }
         return params;
     }
@@ -150,5 +154,4 @@ public class HttpRequest {
     public String getMatchedGroup(int idx) {
         return mMatchedGroups.get(idx);
     }
-
 }

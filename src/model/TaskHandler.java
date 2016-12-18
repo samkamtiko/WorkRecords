@@ -8,4 +8,5 @@ public interface TaskHandler {
     ArrayList<Task> getListForUser(User user);
     ArrayList<Task> getAllTasks();
     void addTask(Task task);
+    void updateTask(Task task);
 }

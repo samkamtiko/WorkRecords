@@ -13,19 +13,21 @@ public class RouteMatcher {
     private static RouteMatcher matcher;
 
     private static HashMap<String, GenericHandler> handlers;
+    private static final String ID = "([a-f\\d]{24})";
 
     static {
         handlers = new LinkedHashMap<>();
         handlers.put("^/login$", new LoginHandler());
 
-        handlers.put("^/users/([a-f\\d]{24})$", new UsersIdHandler());
+        handlers.put("^/users/" + ID + "$", new UsersIdHandler());
         handlers.put("^/users/new$", new UsersNewHandler());
         handlers.put("^/users/list$", new UsersListHandler());
-        handlers.put("^/users/([a-f\\d]{24})/edit$", new UsersEditHandler());
+        handlers.put("^/users/" + ID + "/edit$", new UsersEditHandler());
 
-        handlers.put("^/tasks/([a-f\\d]{24})$", new TasksIdHandler());
+        handlers.put("^/tasks/" + ID + "$", new TasksIdHandler());
         handlers.put("^/tasks/new$", new TasksNewHandler());
         handlers.put("^/tasks/list$", new TasksListHandler());
+        handlers.put("^/tasks/" + ID + "/edit$", new TasksEditHandler());
     }
 
     public static synchronized RouteMatcher getInstance() {

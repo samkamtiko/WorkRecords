@@ -29,6 +29,6 @@ public class TasksNewHandler extends GenericHandler {
         task.setDescription(params.get("description"));
         handler.addTask(task);
         // TODO: implement
-        return HttpResponse.redirect("/tasks/list", "");
+        return HttpResponse.redirect("/tasks/" + task.getId(), "");
     }
 }

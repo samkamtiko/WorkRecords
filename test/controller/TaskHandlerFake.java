@@ -43,6 +43,18 @@ public class TaskHandlerFake implements TaskHandler {
         tasks.add(task);
     }
 
+    @Override
+    public void updateTask(Task task) {
+        for(Task t: tasks) {
+            if (t.getId().equals(task.getId())) {
+                t.setName(task.getName());
+                t.setDescription(task.getDescription());
+                return;
+            }
+        }
+
+    }
+
     public void createTask() {
         Task task = new Task();
         task.setId("1");

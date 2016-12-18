@@ -19,6 +19,8 @@ public class TemplateEngine {
     }
 
     public void addVariable(String name, String value) {
+        if (value == null)
+            value = "";
         mVariables.put(name, value);
     }
 

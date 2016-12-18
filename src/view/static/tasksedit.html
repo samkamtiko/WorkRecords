@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit task</title>
+</head>
+<body>
+<form action="/tasks/<% id %>/edit" method="post">
+    <%! for block: tasks !%>
+    <% block %>
+    <%! endfor !%>
+    <button type="submit">Update</button>
+</body>
+</html>
