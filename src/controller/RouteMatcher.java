@@ -21,7 +21,7 @@ public class RouteMatcher {
         handlers.put("^/users/new$", new UsersNewHandler());
         handlers.put("^/users/list$", new UsersListHandler());
         handlers.put("^/tasks/([a-f\\d]{24})$", new TasksIdHandler());
-        handlers.put("^/tasks/new$", new TaskNewHandler());
+        handlers.put("^/tasks/new$", new TasksNewHandler());
         handlers.put("^/tasks/list$", new TasksListHandler());
     }
 
@@ -35,7 +35,8 @@ public class RouteMatcher {
 
     private boolean isAuthorized(HttpRequest request) {
         // TODO: check if the user is in a database
-        return !request.getOption("Cookie").equals("");
+        // return !request.getOption("Cookie").equals("");
+        return true;
     }
 
     public GenericHandler getMatch(HttpRequest request) {

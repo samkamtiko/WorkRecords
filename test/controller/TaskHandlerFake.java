@@ -34,6 +34,11 @@ public class TaskHandlerFake implements TaskHandler {
     }
 
     @Override
+    public ArrayList<Task> getAllTasks() {
+        return tasks;
+    }
+
+    @Override
     public void addTask(Task task) {
         tasks.add(task);
     }
